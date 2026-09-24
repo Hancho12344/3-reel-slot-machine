@@ -3,17 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hancho Game Server</title>
-  <link rel="stylesheet" href="Style">
+  <title>Hancho Game Server — 3-Reel Classic Slot</title>
+  <link rel="stylesheet" href="Style.css">
 </head>
 <body>
   <div class="game-container">
-    <div id="reel1"></div>
-    <div id="reel2"></div>
-    <div id="reel3"></div>
+    <h1 class="game-title">Classic Slots</h1>
+
+    <div class="credits-display">
+      <span id="creditsLabel">Credits: <span id="creditsValue">100</span></span>
+      <span id="betLabel">Bet: <span id="betValue">5</span></span>
+    </div>
+
+    <div class="reels-frame">
+      <div id="reel1" class="reel"></div>
+      <div id="reel2" class="reel"></div>
+      <div id="reel3" class="reel"></div>
+    </div>
+
+    <div id="resultMessage" class="result-message"></div>
+
+    <div class="controls">
+      <div class="bet-controls">
+        <button id="betDown" class="bet-btn" type="button" aria-label="Decrease bet">-</button>
+        <span>Bet</span>
+        <button id="betUp" class="bet-btn" type="button" aria-label="Increase bet">+</button>
+      </div>
+      <button id="spinButton" type="button">Spin</button>
+    </div>
   </div>
 
   <script src="Script.js"></script>
-  <script src="Script5.js"></script>
 </body>
 </html>
