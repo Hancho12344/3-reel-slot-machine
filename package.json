@@ -1,0 +1,13 @@
+{
+  "name": "casino-portal",
+  "version": "1.0.0",
+  "description": "Casino backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "airtable": "^0.12.2"
+  }
+}
