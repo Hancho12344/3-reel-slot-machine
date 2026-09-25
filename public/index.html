@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaWin Social Casino</title>
+    <style>
+        :root { --bg-dark: #0b0c10; --panel-dark: #1f2833; --neon-gold: #ffcc00; --neon-cyan: #66fcf1; --neon-pink: #ff007f; --text-light: #ffffff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial Black', Gadget, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); padding-bottom: 60px; }
+        header { background: linear-gradient(180deg, #151a22 0%, var(--panel-dark) 100%); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--neon-gold); box-shadow: 0 4px 15px rgba(255, 204, 0, 0.2); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; color: var(--neon-gold); text-transform: uppercase; text-shadow: 0 0 8px rgba(255, 204, 0, 0.6); }
+        .balances { display: flex; gap: 10px; }
+        .balance-box { background: #000; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; border: 1px solid var(--neon-cyan); display: flex; align-items: center; gap: 5px; }
+        .balance-box.gc { border-color: var(--neon-gold); color: var(--neon-gold); }
+        .balance-box.sc { border-color: var(--neon-pink); color: var(--neon-pink); }
+        .jackpot-ticker { background: linear-gradient(90deg, var(--neon-pink) 0%, #7b00ff 100%); padding: 10px; text-align: center; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .jackpot-amount { color: var(--neon-gold); }
+        .main-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
+        .section-title { font-size: 1.2rem; margin-bottom: 15px; color: var(--neon-cyan); text-transform: uppercase; }
+        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .game-grid { grid-template-columns: repeat(4, 1fr); } }
+        .game-card { background-color: var(--panel-dark); border-radius: 12px; overflow: hidden; position: relative; border: 2px solid #2c3b4e; transition: transform 0.2s; cursor: pointer; aspect-ratio: 4 / 3; }
+        .game-card:hover { transform: scale(1.04); border-color: var(--neon-gold); }
+        .game-img { width: 100%; height: 100%; object-fit: cover; }
+        .game-label { position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.8); padding: 8px; text-align: center; font-size: 0.8rem; text-transform: uppercase; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #151a22; display: flex; justify-content: space-around; padding: 10px 0; border-top: 2px solid var(--neon-cyan); z-index: 100; }
+        .nav-btn { background: none; border: none; color: var(--text-light); font-size: 0.8rem; text-transform: uppercase; font-weight: bold; cursor: pointer; }
+        .buy-btn { background: linear-gradient(180deg, #ffec64 0%, #ffab00 100%); color: #000; padding: 6px 20px; border-radius: 15px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MEGAWIN</div>
+        <div class="balances">
+            <div class="balance-box gc">GC: <span id="gc-balance">Loading...</span></div>
+            <div class="balance-box sc">SC: <span id="sc-balance">Loading...</span></div>
+        </div>
+    </header>
+
+    <div class="jackpot-ticker">Grand Jackpot: <span class="jackpot-amount">\$1,248,392.40</span></div>
+
+    <div class="main-container">
+        <h2 class="section-title">Featured Titles</h2>
+        <div class="game-grid">
+            <div class="game-card"><div class="game-img" style="background: radial-gradient(circle, #ff0055, #000);"></div><div class="game-label">Gold Rush Reels</div></div>
+            <div class="game-card"><div class="game-img" style="background: radial-gradient(circle, #00ffcc, #000);"></div><div class="game-label">Ocean Treasure</div></div>
+            <div class="game-card"><div class="game-img" style="background: radial-gradient(circle, #ffcc00, #000);"></div><div class="game-label">Wild Buffalo</div></div>
+            <div class="game-card"><div class="game-img" style="background: radial-gradient(circle, #7b00ff, #000);"></div><div class="game-label">Diamond Burst</div></div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <button class="nav-btn">Lobby</button>
+        <button class="nav-btn buy-btn">Buy Coins</button>
+        <button class="nav-btn">Account</button>
+    </div>
+
+    <script>
+        // Temporary testing execution: Looks up the test user profile we input manually into Airtable
+        const testEmail = 'testplayer@gmail.com'; 
+
+        async function fetchBalances() {
+            try {
+                const response = await fetch(`/api/player/${testEmail}`);
+                const data = await response.json();
+                if(!data.error) {
+                    document.getElementById('gc-balance').innerText = Number(data.goldCoins).toLocaleString();
+                    document.getElementById('sc-balance').innerText = Number(data.sweepCoins).toFixed(2);
+                }
+            } catch (err) {
+                document.getElementById('gc-balance').innerText = 'Error';
+                document.getElementById('sc-balance').innerText = 'Error';
+            }
+        }
+        window.onload = fetchBalances;
+    </script>
+</body>
+</html>
