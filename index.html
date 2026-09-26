@@ -34,5 +34,22 @@
   </div>
 
   <script src="Script.js"></script>
-</body>
+<script>
+    const testEmail = 'jehancho1234@gmail.com'; 
+
+    async function fetchBalances() {
+        try {
+            const response = await fetch(`/api/player/${testEmail}`);
+            const data = await response.json();
+            if(!data.error) {
+                document.getElementById('gc-balance').innerText = Number(data.goldCoins).toLocaleString();
+                document.getElementById('sc-balance').innerText = Number(data.sweepCoins).toFixed(2);
+            }
+        } catch (err) {
+            document.getElementById('gc-balance').innerText = 'Error';
+            document.getElementById('sc-balance').innerText = 'Error';
+        }
+    }
+    window.onload = fetchBalances;
+</script>
 </html>
